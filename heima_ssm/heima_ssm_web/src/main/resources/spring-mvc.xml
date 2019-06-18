@@ -18,7 +18,7 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 <!--    扫包-->
-    <context:component-scan base-package="com.itheima.ssm.Controller"/>
+    <context:component-scan base-package="com.itheima.ssm.controller"/>
 
 <!--    注解驱动-->
     <mvc:annotation-driven/>
