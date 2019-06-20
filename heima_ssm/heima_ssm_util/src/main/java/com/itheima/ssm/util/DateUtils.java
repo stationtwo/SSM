@@ -11,7 +11,7 @@ public class DateUtils {
      * @param patt
      * @return
      */
-    public static String getStr(Date date, String patt){
+    public static String date2Str(Date date, String patt){
         SimpleDateFormat dateFormat = new SimpleDateFormat(patt);
         String format = dateFormat.format(date);
         return format;
@@ -25,7 +25,7 @@ public class DateUtils {
      * @return
      * @throws ParseException
      */
-    public static Date getDate(String string, String patt) throws ParseException {
+    public static Date str2Date(String string, String patt) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat(patt);
         Date date = dateFormat.parse(string);
         return date;

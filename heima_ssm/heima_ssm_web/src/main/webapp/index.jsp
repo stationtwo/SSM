@@ -11,8 +11,11 @@
     <title>home</title>
 </head>
 <body>
-<a href="${pageContext.servletContext.contextPath}/product/findAll.do">
-    <div>点击查看列表</div>
+<jsp:forward page="${pageContext.servletContext.contextPath}/pages/main.jsp"></jsp:forward>
+
+
+<%--<a href="${pageContext.servletContext.contextPath}/product/findAll.do">
+    <div>点击查看列表</div>--%>
 </a>
 </body>
 </html>
