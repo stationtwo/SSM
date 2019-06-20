@@ -14,46 +14,13 @@ public class Orders {
     private String orderTimeStr;//日期字符串
     private Integer peopleCount;//人数
     private String orderDesc;//订单描述
-    private Integer payType;//支付类型(0 支付宝  1 微信 2 其他)
     private String payTypeStr;
     private Integer orderStatus;
-    private String orderStatusStr;//0 未支付,1 已支付
     private String productId;//产品id
     private Product product;//产品列表
     private String MemberId;//会员id(联系人)
-    private List<Member> memberList;//联系人列表
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public Product getproduct() {
-        return product;
-    }
-
-    public void setproduct(Product product) {
-        this.product = product;
-    }
-
-    public String getMemberId() {
-        return MemberId;
-    }
-
-    public void setMemberId(String memberId) {
-        MemberId = memberId;
-    }
-
-    public List<Member> getMemberList() {
-        return memberList;
-    }
-
-    public void setMemberList(List<Member> memberList) {
-        this.memberList = memberList;
-    }
+    private Member member;//联系人列表
+    private List<Traveller> travellerList;
 
     public String getId() {
         return id;
@@ -80,9 +47,6 @@ public class Orders {
     }
 
     public String getOrderTimeStr() {
-        if (orderTime != null) {
-            orderTimeStr = DateUtils.date2Str(orderTime, "yyyy-MM-dd HH:mm:ss");
-        }
         return orderTimeStr;
     }
 
@@ -90,11 +54,11 @@ public class Orders {
         this.orderTimeStr = orderTimeStr;
     }
 
-    public Integer getpeopleCount() {
+    public Integer getPeopleCount() {
         return peopleCount;
     }
 
-    public void setpeopleCount(Integer peopleCount) {
+    public void setPeopleCount(Integer peopleCount) {
         this.peopleCount = peopleCount;
     }
 
@@ -106,27 +70,7 @@ public class Orders {
         this.orderDesc = orderDesc;
     }
 
-    public Integer getPayType() {
-        return payType;
-    }
-
-    public void setPayType(Integer payType) {
-        this.payType = payType;
-    }
-
     public String getPayTypeStr() {
-        if (payType != null) {
-            if (payType == 0) {
-                payTypeStr = "支付宝";
-            }
-            if (payType == 1) {
-                payTypeStr = "微信";
-            }
-            if (payType == 2) {
-                payTypeStr = "其他";
-            }
-        }
-
         return payTypeStr;
     }
 
@@ -142,19 +86,43 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public String getOrderStatusStr() {
-        if (orderStatus != null) {
-            if (orderStatus == 0) {
-                orderStatusStr = "未支付";
-            }
-            if (orderStatus == 1) {
-                orderStatusStr = "已支付";
-            }
-        }
-        return orderStatusStr;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setOrderStatusStr(String orderStatusStr) {
-        this.orderStatusStr = orderStatusStr;
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getMemberId() {
+        return MemberId;
+    }
+
+    public void setMemberId(String memberId) {
+        MemberId = memberId;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public List<Traveller> getTravellerList() {
+        return travellerList;
+    }
+
+    public void setTravellerList(List<Traveller> travellerList) {
+        this.travellerList = travellerList;
     }
 }
