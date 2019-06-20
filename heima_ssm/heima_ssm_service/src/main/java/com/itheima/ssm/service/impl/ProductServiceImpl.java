@@ -11,14 +11,20 @@ import java.util.List;
 
 @Service
 @Transactional
-public class IProductServiceImpl implements IProductService {
+public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductDao productDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Product> findAll() throws Exception {
         List<Product> productList = productDao.findAll();
         return productList;
+    }
+
+    @Override
+    public void save(Product product) throws Exception {
+        productDao.save(product);
     }
 }
