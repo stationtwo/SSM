@@ -166,12 +166,12 @@
 			<!-- 内容头部 -->
 			<section class="content-header">
 				<h1>
-					数据管理 <small>数据列表</small>
+					产品管理 <small>产品列表</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-					<li><a href="#">数据管理</a></li>
-					<li class="active">数据列表</li>
+					<li><a href="${pageContext.servletContext.contextPath}/pages/main.jsp"><i class="fa fa-dashboard"></i> 首页</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/product/findAll.do">产品管理</a></li>
+					<li class="active">产品列表</li>
 				</ol>
 			</section>
 			<!-- 内容头部 /-->
@@ -244,18 +244,18 @@
 								<tbody>
 
 
-									<c:forEach items="${productList}" var="product">
+									<c:forEach items="${pageInfo.list}" var="product" varStatus="count">
 
 										<tr>
 											<td><input name="ids" type="checkbox"></td>
-											<td>${product.id }</td>
+											<td>${pageInfo.startRow + count.index}</td>
 											<td>${product.productNum }</td>
 											<td>${product.productName }</td>
 											<td>${product.cityName }</td>
 											<td>${product.departureTimeStr }</td>
 											<td class="text-center">${product.productPrice }</td>
 											<td>${product.productDesc }</td>
-											<td class="text-center">${product.productStatusStr }</td>
+											<td class="text-center">${product.productStatus == 0? "关闭":"开启" }</td>
 											<td class="text-center">
 												<button type="button" class="btn bg-olive btn-xs">订单</button>
 												<button type="button" class="btn bg-olive btn-xs">详情</button>
@@ -316,30 +316,95 @@
 					<!-- /.box-body -->
 
 					<!-- .box-footer-->
+
 					<div class="box-footer">
 						<div class="pull-left">
 							<div class="form-group form-inline">
-								总共2 页，共14 条数据。 每页 <select class="form-control">
-									<option>1</option>
-									<option>2</option>
-									<option>3</option>
-									<option>4</option>
-									<option>5</option>
-								</select> 条
+								总共${pageInfo.pages}页&nbsp;&nbsp;&nbsp; 共${pageInfo.total}条数据&nbsp;&nbsp;&nbsp; 每页显示
+								<select class="form-control" id="changePageSize" onchange="changePageSize()">
+									<c:forEach begin="1" end="10" var="index">
+										<%--                                    如果是当前设置的pageSize 选中显示--%>
+										<c:if test="${index == pageInfo.pageSize}">
+											<option selected>${index}</option>
+										</c:if>
+										<c:if test="${index != pageInfo.pageSize}">
+											<option>${index}</option>
+										</c:if>
+									</c:forEach>
+								</select>条
 							</div>
 						</div>
 
+
+						<%--                   分页页面底部导航栏 --%>
 						<div class="box-tools pull-right">
 							<ul class="pagination">
-								<li><a href="#" aria-label="Previous">首页</a></li>
-								<li><a href="#">上一页</a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li><a href="#">下一页</a></li>
-								<li><a href="#" aria-label="Next">尾页</a></li>
+								<%--                            跳转到选择的页面--%>
+								跳转到  <select id="changePageNum" onchange="changePageNum()">
+								<c:forEach begin="${pageInfo.pageNum-pageInfo.navigatePages < 1 ? 1 : pageInfo.pageNum-pageInfo.navigatePages}" end="${pageInfo.pageNum+pageInfo.navigatePages > pageInfo.pages? pageInfo.pages: pageInfo.pageNum+pageInfo.navigatePages}" var="index">
+									<%--                                    如果是当前设置的pageNum 选中显示--%>
+									<c:if test="${index == pageInfo.pageNum}">
+										<option selected>${index}</option>
+									</c:if>
+									<c:if test="${index != pageInfo.pageNum}">
+										<option>${index}</option>
+									</c:if>
+								</c:forEach>
+							</select>页
+
+								<%--                            如果已是首页 禁用并且没有链接--%>
+								<c:if test="${pageInfo.isFirstPage}">
+									<li class="disabled"><a href="javaScript:void (0)">首页</a></li>
+								</c:if>
+								<c:if test="${!pageInfo.isFirstPage}">
+									<li>
+										<a href="${pageContext.servletContext.contextPath}/product/findAll.do?page=1&pageSize=${pageInfo.pageSize}">首页</a>
+									</li>
+								</c:if>
+
+								<%--                            上一页 如果没有上一页 禁用 并且不给链接--%>
+								<c:if test="${pageInfo.hasPreviousPage}">
+									<li>
+										<a href="${pageContext.servletContext.contextPath}/product/findAll.do?page=${pageInfo.prePage}&pageSize=${pageInfo.pageSize}">上一页</a>
+									</li>
+								</c:if>
+								<c:if test="${pageInfo.isFirstPage}">
+									<li class="disabled"><a href="javaScript:void (0)">上一页</a></li>
+								</c:if>
+								<%--                            中间页--%>
+								<%--                                    循环遍历pageInfo中的导航页数
+                                                                           当前页 active 并且 没有链接--%>
+								<c:forEach items="${pageInfo.navigatepageNums}" var="page_num">
+									<c:if test="${pageInfo.pageNum != page_num}">
+										<li>
+											<a href="${pageContext.servletContext.contextPath}/product/findAll.do?page=${page_num}&pageSize=${pageInfo.pageSize}">${page_num}</a>
+										</li>
+									</c:if>
+									<c:if test="${pageInfo.pageNum == page_num}">
+										<li class="active"><a href="javaScript:void (0)">${page_num}</a></li>
+									</c:if>
+								</c:forEach>
+
+								<%--                            下一页 如果没有下一页 禁用 并且不给链接--%>
+								<c:if test="${pageInfo.hasNextPage}">
+									<li>
+										<a href="${pageContext.servletContext.contextPath}/product/findAll.do?page=${pageInfo.nextPage}&pageSize=${pageInfo.pageSize}">下一页</a>
+									</li>
+								</c:if>
+								<c:if test="${pageInfo.isLastPage}">
+									<li class="disabled"><a href="javaScript:void (0)">下一页</a></li>
+								</c:if>
+
+								<%--                            尾页 如果已是尾页,禁用并且没有链接--%>
+								<c:if test="${pageInfo.isLastPage}">
+									<li class="disabled"><a href="javaScript:void (0)">尾页</a></li>
+								</c:if>
+								<c:if test="${!pageInfo.isLastPage}">
+									<li>
+										<a href="${pageContext.servletContext.contextPath}/product/findAll.do?page=${pageInfo.pages}&pageSize=${pageInfo.pageSize}">尾页</a>
+									</li>
+								</c:if>
+
 							</ul>
 						</div>
 
@@ -459,6 +524,22 @@
 	<script
 		src="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script>
+		function changePageSize() {
+			//获取下拉框的值
+			var pageSize = $("#changePageSize").val();
+
+			//向服务器发送请求，改变没页显示条数
+			location.href = "${pageContext.request.contextPath}/product/findAll.do?page=1&pageSize="
+					+ pageSize;
+		}
+
+		function changePageNum() {
+			//获取下拉框的值
+			var pageNum = $("#changePageNum").val();
+
+			//向服务器发送请求，改变每页显示条数
+			location.href = "${pageContext.request.contextPath}/product/findAll.do?page="+pageNum+"&pageSize=${pageInfo.pageSize}";
+		}
 		$(document).ready(function() {
 			// 选择框
 			$(".select2").select2();

@@ -1,6 +1,6 @@
 package com.itheima.ssm.domain;
 
-import com.itheima.ssm.util.DateUtils;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -14,13 +14,22 @@ public class Orders {
     private String orderTimeStr;//日期字符串
     private Integer peopleCount;//人数
     private String orderDesc;//订单描述
-    private String payTypeStr;
+    private String payType;//支付状态
     private Integer orderStatus;
     private String productId;//产品id
     private Product product;//产品列表
     private String MemberId;//会员id(联系人)
     private Member member;//联系人列表
     private List<Traveller> travellerList;
+    private List<Role> roleList;
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public String getId() {
         return id;
@@ -70,12 +79,12 @@ public class Orders {
         this.orderDesc = orderDesc;
     }
 
-    public String getPayTypeStr() {
-        return payTypeStr;
+    public String getPayType() {
+        return payType;
     }
 
-    public void setPayTypeStr(String payTypeStr) {
-        this.payTypeStr = payTypeStr;
+    public void setPayType(String payType) {
+        this.payType = payType;
     }
 
     public Integer getOrderStatus() {

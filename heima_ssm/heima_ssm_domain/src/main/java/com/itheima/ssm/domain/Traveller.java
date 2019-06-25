@@ -6,10 +6,8 @@ public class Traveller {
     private String sex;
     private String phoneNum;
     private Integer credentialsType;
-    private String credentialsTypeStr;
     private String credentialsNum;
     private Integer travellerType;
-    private String travellerTypeStr;
 
     public String getId() {
         return id;
@@ -51,13 +49,6 @@ public class Traveller {
         this.credentialsType = credentialsType;
     }
 
-    public String getCredentialsTypeStr() {
-        return credentialsTypeStr;
-    }
-
-    public void setCredentialsTypeStr(String credentialsTypeStr) {
-        this.credentialsTypeStr = credentialsTypeStr;
-    }
 
     public String getCredentialsNum() {
         return credentialsNum;
@@ -75,11 +66,4 @@ public class Traveller {
         this.travellerType = travellerType;
     }
 
-    public String getTravellerTypeStr() {
-        return travellerTypeStr;
-    }
-
-    public void setTravellerTypeStr(String travellerTypeStr) {
-        this.travellerTypeStr = travellerTypeStr;
-    }
 }

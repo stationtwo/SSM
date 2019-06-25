@@ -27,6 +27,8 @@
         <property name="prefix" value="/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <aop:aspectj-autoproxy/>
 <!--静态资源放行-->
     <mvc:default-servlet-handler/>
 

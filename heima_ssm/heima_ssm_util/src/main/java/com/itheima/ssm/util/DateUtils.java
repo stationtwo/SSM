@@ -18,6 +18,13 @@ public class DateUtils {
 
     }
 
+    public static String date2Str(Date date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = dateFormat.format(date);
+        return format;
+
+    }
+
     /**
      * 将patt格式的字符串转换成日期
      * @param string

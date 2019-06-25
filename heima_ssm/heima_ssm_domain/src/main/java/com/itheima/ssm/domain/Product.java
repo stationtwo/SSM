@@ -18,7 +18,6 @@ public class Product {
     private Double productPrice;//金额
     private String productDesc;//描述
     private Integer productStatus;//状态 0关闭 1开启
-    private String productStatusStr;//状态字符串
 
     public String getdepartureTimeStr() {
         if (departureTime != null) {
@@ -32,18 +31,6 @@ public class Product {
             departureTimeStr = DateUtils.date2Str(departureTime, "yyyy-MM-dd HH:mm:ss");
         }*/
         this.departureTimeStr = departureTimeStr;
-    }
-
-    public String getproductStatusStr() {
-        if (productStatus != null) {
-            if (productStatus == 0) productStatusStr = "关闭";
-            if (productStatus == 1) productStatusStr = "开启";
-        }
-        return productStatusStr;
-    }
-
-    public void setproductStatusStr(String productStatusStr) {
-        this.productStatusStr = productStatusStr;
     }
 
     public String getId() {

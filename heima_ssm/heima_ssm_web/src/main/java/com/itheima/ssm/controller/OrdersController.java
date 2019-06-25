@@ -18,12 +18,21 @@ public class OrdersController {
     private OrdersService ordersService;
 
     @RequestMapping("/findAll.do")
-    public ModelAndView findAll(@RequestParam(required = false,defaultValue = "1",name = "page")int page,@RequestParam(name = "pageSize",defaultValue = "3",required = false) int pageSize) throws Exception {
+    public ModelAndView findAll(@RequestParam(required = false,defaultValue = "1",name = "page")Integer page,@RequestParam(name = "pageSize",defaultValue = "3",required = false) Integer pageSize) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
-        PageInfo<Orders> pageInfo = ordersService.findAll(page,pageSize);
+        PageInfo<Orders> pageInfo = ordersService.listOrdersByPage(page,pageSize);
         modelAndView.addObject("pageInfo", pageInfo);
 
         modelAndView.setViewName("orders-list");
+        return modelAndView;
+    }
+
+    @RequestMapping("/findById.do")
+    public ModelAndView findById(@RequestParam(required = true,name = "id") String id) throws Exception{
+        ModelAndView modelAndView = new ModelAndView();
+        Orders orders = ordersService.getOrdersById(id);
+        modelAndView.addObject("orders", orders);
+        modelAndView.setViewName("orders-show");
         return modelAndView;
     }
 }
